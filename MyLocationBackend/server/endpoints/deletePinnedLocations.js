@@ -51,6 +51,61 @@ const deletePinnedLocation = (req,res) => {
                     return loc
                     }
                 })
+
+                fs.readFile('../db/locationAction.json',(err,maintainceDate)=> {
+                    let maintainceLocationData = JSON.parse(maintainceDate.toString()) 
+                    if(maintainceLocationData[`${userid}`]) {
+                        maintainceLocationData[`${userid}`].filter(x=> x.locationid === locationid).map(x=> {
+                            let a2 =  new Date().toLocaleString({ timeZone: 'Asia/Kolkata' })
+            
+                            let b2 =a2.replace(" ", "T")
+                            let a5 = b2.replace(",",'')
+                            let obj = {
+                                action : "deleted",
+                                timeStamp : a5
+                            }
+
+                            x.historyOfActions.push(obj)
+                        })
+
+                        fs.writeFile('../db/locationAction.json',JSON.stringify(maintainceLocationData) ,(err,result) => {
+                                   if(err) {
+                                       console.log("gone dowm")
+                                   }
+               
+                                   if(result) {
+                                       console.log("sucess")
+                                   }
+        
+                                  })
+
+                               
+                    
+
+
+                    } else {
+                        res.status(500).json("internal server error")
+                        return
+                    }
+                //    maintainceLocationData[`${userid}`] = []
+                //       maintainceLocationData[`${userid}`].push({locationid : locationid, historyOfActions : [{action : "created", timeStamp : a5}]})
+                //       console.log(maintainceDate)
+                //       fs.writeFile('../db/locationAction.json',JSON.stringify(maintainceLocationData) ,(err,result) => {
+                //        if(err) {
+                //            console.log("gone dowm")
+                //        }
+   
+                //        if(result) {
+                //            console.log("sucess")
+                //        }
+
+                //       })
+                   
+               })
+                
+                
+
+
                 console.log("modifed",arr)
                 locationData[`${userid}`] = arr
                 console.log("final data",locationData)

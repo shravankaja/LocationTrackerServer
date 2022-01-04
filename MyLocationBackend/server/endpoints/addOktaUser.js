@@ -7,10 +7,11 @@ const shortid = require('shortid');
 const addOktaUser =(req,res) => {
     
         const {token} = req.body
+        console.log(token   )
         const parsedToken = jwt_decode(token)
         console.log(parsedToken)
-        let userid 
         let lastname
+        let userid 
         let registrationType
         
         fs.readFile('../db/users.json', (err,data) => {
