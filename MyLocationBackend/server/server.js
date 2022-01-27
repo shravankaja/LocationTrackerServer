@@ -11,6 +11,8 @@ const storePinnedLocations = require('../server/endpoints/storePinnedLocations')
 const getPinnedLocations = require("../server/endpoints/getPinnedLocations")
 const deletePinnedLocation = require("../server/endpoints/deletePinnedLocations")
 const editPinnedLocation = require("../server/endpoints/editPinnedLocation")
+const addHeatMap = require('./endpoints/addHeatMap')
+const getAllHeatMaps = require('../server/endpoints/getAllHeatMap')
 
 server.use(bodyParser.urlencoded({extended: true}))
 server.use(bodyParser.json())
@@ -111,6 +113,7 @@ server.post('/storePinnedLocation', (req,res) => {
 
 server.get("/getPinnedLocations", (req,res) => {
     getPinnedLocations.getPinnedLocations(req,res)
+
 })
 
 
@@ -124,6 +127,13 @@ server.put("/editPinnedLocation", (req,res) => {
     editPinnedLocation.editPinnedLocation(req,res)
 })
 
+server.post("/addHeatMap",(req,res)=> {
+    addHeatMap.addHeatMap(req,res)
+})
+
+server.get("/getAllHeatMapsUser", (req,res)=> {
+    getAllHeatMaps.getAllHeatMaps(req,res)
+})  
 
 
 
